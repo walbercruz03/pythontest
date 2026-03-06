@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Frontend</title>
+</head>
+<body>
+  <h1>Frontend em HTML/JS</h1>
+  <button onclick="buscar()">Chamar Backend</button>
+  <p id="resposta"></p>
+
+  <script>
+  function buscar() {
+    fetch("http://backend:5000/api/mensagem")
+      .then(r => r.json())
+      .then(d => document.getElementById("resposta").innerText = d.msg);
+  }
+</script>
+
+</body>
+</html>
