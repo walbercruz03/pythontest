@@ -30,7 +30,11 @@
   <img src="https://blog.eseg.edu.br/wp-content/uploads/2020/06/original-6f96ee168ab0b419a98fea4f2dfc31fc.jpg" alt="Progamando" width="300" height="200">
   </div>
   <br>
-  <button onclick="buscar()">Enviar dados</button>
+  <button onclick="buscar()">Enviar dados</button> <button onclick="verDados()">Ver Dados</button>
+<pre id="lista"></pre> <button onclick="excluirDados()">Excluir Dados</button>
+<p id="excluirMsg"></p>
+
+
   <p id="resposta"></p>
 
   <script>
@@ -52,6 +56,33 @@ function buscar() {
   .then(r => r.json())
   .then(d => document.getElementById("resposta").innerText = d.msg);
 }
+
+function verDados() {
+  fetch("http://localhost:5000/api/dados")
+    .then(r => r.json())
+    .then(lista => {
+      document.getElementById("lista").innerText = JSON.stringify(lista, null, 2);
+    })
+    .catch(err => {
+      document.getElementById("lista").innerText = "Erro ao carregar dados: " + err;
+    });
+}
+
+function excluirDados() {
+  fetch("http://localhost:5000/api/dados", {
+    method: "DELETE"
+  })
+    .then(r => r.json())
+    .then(res => {
+      document.getElementById("excluirMsg").innerText = res.msg;
+      document.getElementById("lista").innerText = ""; // limpa a lista exibida
+    })
+    .catch(err => {
+      document.getElementById("excluirMsg").innerText = "Erro ao excluir: " + err;
+    });
+}
+
+
 
 </script>
 
