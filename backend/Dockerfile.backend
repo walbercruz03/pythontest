@@ -1,5 +1,13 @@
 FROM python:3.11-slim
+
 WORKDIR /app
+
+# copia requirements.txt e instala dependências
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# copia o app.py
 COPY app.py .
-RUN pip install flask
+
+# comando para rodar o backend
 CMD ["python", "app.py"]

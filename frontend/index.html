@@ -1,19 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+  <meta charset="UTF-8">
   <title>Frontend</title>
 </head>
 <body>
-  <h1>Frontend em HTML/JS</h1>
-  <button onclick="buscar()">Chamar Backend</button>
+  <h2 style="color: brown;">Iniciando python junto com api</h2><br>
+
+  <h1>Olá, seja bem-vindo!</h1>
+  
+  <div>
+  <h2>Formulario de Informações</h2>
+  <label>Nome:</label>  
+  <input type="text" name="nome" placeholder="Digite seu nome">
+  <br>
+  <label>Email:</label>
+  <input type="email" placeholder="Digite seu email">
+  <br>
+  <label>Data de Nascimento:</label>
+  <input type="date">
+  <br>
+  <label>Sexo:</label><br>
+  <input type="radio" id="masculino" name="sexo" value="masculino">
+  <label for="masculino">Masculino</label><br>
+
+  <input type="radio" id="feminino" name="sexo" value="feminino">
+  <label for="feminino">Feminino</label>
+  <br>
+  <img src="https://blog.eseg.edu.br/wp-content/uploads/2020/06/original-6f96ee168ab0b419a98fea4f2dfc31fc.jpg" alt="Progamando" width="300" height="200">
+  </div>
+  <br>
+  <button onclick="buscar()">Enviar dados</button>
   <p id="resposta"></p>
 
   <script>
-  function buscar() {
-    fetch("http://backend:5000/api/mensagem")
-      .then(r => r.json())
-      .then(d => document.getElementById("resposta").innerText = d.msg);
-  }
+  
+function buscar() {
+  const nome = document.querySelector('input[name="nome"]').value;
+  const email = document.querySelector('input[type="email"]').value;
+  const data = document.querySelector('input[type="date"]').value;
+  const sexo = document.querySelector('input[name="sexo"]:checked')?.value;
+
+  const dados = { nome, email, data, sexo };
+
+  fetch("http://localhost:5000/api/mensagem", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(dados)
+})
+
+  .then(r => r.json())
+  .then(d => document.getElementById("resposta").innerText = d.msg);
+}
+
 </script>
 
 </body>
